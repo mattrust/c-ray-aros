@@ -103,7 +103,11 @@ void writeFile(const unsigned char *buf, size_t bufsize, const char *filePath) {
 	char *backupPath = NULL;
 	if(!file) {
 		char *name = getFileName(filePath);
+#ifdef __AROS__
+		backupPath = stringConcat("", name);
+#else
 		backupPath = stringConcat("./", name);
+#endif
 		free(name);
 		file = fopen(backupPath, "wb");
 		if (file) {
@@ -130,7 +134,7 @@ void writeFile(const unsigned char *buf, size_t bufsize, const char *filePath) {
 
 bool isValidFile(char *path, struct file_cache *cache) {
 	if (!isSet("use_clustering") && cache) return cache_contains(cache, path);
-#ifndef WINDOWS
+#if !defined(WINDOWS) && !defined(__AROS__)
 	struct stat path_stat;
 	stat(path, &path_stat);
 	return S_ISREG(path_stat.st_mode);
@@ -145,7 +149,7 @@ bool isValidFile(char *path, struct file_cache *cache) {
 }
 
 void wait_for_stdin(int seconds) {
-#ifndef WINDOWS
+#if !defined(WINDOWS) && !defined(__AROS__)
 	fd_set set;
 	struct timeval timeout;
 	int rv;

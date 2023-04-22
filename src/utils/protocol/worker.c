@@ -8,7 +8,7 @@
 
 #include "../logging.h"
 //Windows is annoying, so it's just not going to have networking. Because it is annoying and proprietary.
-#ifndef WINDOWS
+#if !defined(WINDOWS) && !defined(__AROS__)
 #include <signal.h>
 #include <string.h>
 #include <errno.h>

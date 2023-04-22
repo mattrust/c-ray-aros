@@ -51,6 +51,8 @@ long timer_get_us(struct timeval timer) {
 #ifdef __linux__
 #define _BSD_SOURCE
 #include <unistd.h>
+#elif __AROS__
+#include <unistd.h>
 #endif
 
 /**
@@ -66,7 +68,7 @@ void timer_sleep_ms(int ms) {
 	ts.tv_sec = ms / 1000;
 	ts.tv_nsec = (ms % 1000) * 1000000;
 	nanosleep(&ts, NULL);
-#elif __linux__
+#elif __linux__ || __AROS__
 	usleep(ms * 1000);
 #endif
 }

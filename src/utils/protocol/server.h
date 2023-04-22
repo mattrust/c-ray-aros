@@ -8,7 +8,7 @@
 
 #pragma once
 
-#ifndef WINDOWS
+#if !defined(WINDOWS) && !defined(__AROS__)
 #include <arpa/inet.h>
 #endif
 
@@ -26,7 +26,7 @@ enum clientStatus {
 };
 
 struct renderClient {
-#ifndef WINDOWS
+#if !defined(WINDOWS) && !defined(__AROS__)
 	struct sockaddr_in address;
 #endif
 	enum clientStatus status;

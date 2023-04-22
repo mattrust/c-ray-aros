@@ -8,7 +8,7 @@
 
 #pragma once
 
-#ifndef WINDOWS
+#if !defined(WINDOWS) && !defined(__AROS__)
 
 #include <unistd.h>
 
